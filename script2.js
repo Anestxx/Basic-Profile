@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     const greeting1 = document.getElementById('greeting1');
     const greeting2 = document.getElementById('greeting2');
+    const greeting3 = document.getElementById('greeting3');
+    const greeting4 = document.getElementById('greeting4');
     const container = document.querySelector('.container');
     const socials = document.getElementById('socials');
 
@@ -11,7 +13,16 @@ document.addEventListener('DOMContentLoaded', function () {
         fadeOut(greeting1, 1400, function () {
             fadeIn(greeting2, 1400, function () {
                 fadeOut(greeting2, 1400, function () {
-                    animateBackgroundColorChange(container, 'black', '#2c2c2c', 800);
+                    fadeIn(greeting3, 1400, function () {
+                        fadeOut(greeting3, 1400, function () {
+                            fadeIn(greeting4, 1400, function () {
+                                container.style.backgroundColor = 'black'; // Change background to pink after greeting2 fades in
+                                fadeOut(greeting4, 1400, function () {
+                                    showSocials();
+                                });
+                            });
+                        });
+                    });
                 });
             });
         });
@@ -33,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (progress < 1) {
                 requestAnimationFrame(fade);
             } else {
-                callback();
+                if (callback) callback();
             }
         }
 
@@ -55,58 +66,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 requestAnimationFrame(fade);
             } else {
                 element.style.display = 'none';
-                callback();
+                if (callback) callback();
             }
         }
 
         requestAnimationFrame(fade);
     }
 
-    function animateBackgroundColorChange(element, fromColor, toColor, duration) {
-        let startTime = null;
-
-        function animate() {
-            if (startTime === null) {
-                startTime = performance.now();
-            }
-
-            const progress = (performance.now() - startTime) / duration;
-            element.style.backgroundColor = interpolateColor(fromColor, toColor, progress);
-
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                showSocials();
-            }
-        }
-
-        requestAnimationFrame(animate);
-    }
-
     function showSocials() {
         fadeIn(socials, 1000);
         socials.classList.remove('hidden');
-    }
-
-    function interpolateColor(fromColor, toColor, progress) {
-        const fromRGB = hexToRGB(fromColor);
-        const toRGB = hexToRGB(toColor);
-
-        const resultRGB = [];
-        for (let i = 0; i < 3; i++) {
-            resultRGB[i] = Math.round(fromRGB[i] + (toRGB[i] - fromRGB[i]) * progress);
-        }
-
-        return `rgb(${resultRGB.join(',')})`;
-    }
-
-    function hexToRGB(hexColor) {
-        const hex = hexColor.slice(1);
-        const bigint = parseInt(hex, 16);
-        const r = (bigint >> 16) & 255;
-        const g = (bigint >> 8) & 255;
-        const b = bigint & 255;
-
-        return [r, g, b];
     }
 });
