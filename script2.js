@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fadeOut(greeting1, 1400, function () {
             fadeIn(greeting2, 1400, function () {
                 fadeOut(greeting2, 1400, function () {
-                    animateBackgroundColorChange(container, 'black', '#121212', 800);
+                    animateBackgroundColorChange(container, 'black', '#2c2c2c', 800);
                 });
             });
         });
