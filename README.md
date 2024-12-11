@@ -1,2 +1,2 @@
 # Basic-Profile
-this gonna crash your pc and your heart 🙂
+I'm gonna have your heart from this
