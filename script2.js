@@ -3,11 +3,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const greeting2 = document.getElementById('greeting2');
     const greeting3 = document.getElementById('greeting3');
     const greeting4 = document.getElementById('greeting4');
+    const greeting5 = document.getElementById('greeting5');
     const container = document.querySelector('.container');
     const socials = document.getElementById('socials');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
 
     socials.style.opacity = 0;
     socials.classList.add('hidden');
+    yesBtn.style.display = 'none';
+    noBtn.style.display = 'none';
 
     fadeIn(greeting1, 1400, function () {
         fadeOut(greeting1, 1400, function () {
@@ -16,9 +21,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     fadeIn(greeting3, 1400, function () {
                         fadeOut(greeting3, 1400, function () {
                             fadeIn(greeting4, 1400, function () {
-                                container.style.backgroundColor = 'black'; // Change background to pink after greeting2 fades in
+                                container.style.backgroundColor = 'black';
                                 fadeOut(greeting4, 1400, function () {
-                                    showSocials();
+                                    fadeIn(greeting5, 1400, function () { 
+                                        showButtons(); 
+                                    });
                                 });
                             });
                         });
@@ -73,8 +80,34 @@ document.addEventListener('DOMContentLoaded', function () {
         requestAnimationFrame(fade);
     }
 
-    function showSocials() {
-        fadeIn(socials, 1000);
-        socials.classList.remove('hidden');
+    function showButtons() {
+        yesBtn.style.display = 'inline-block';
+        noBtn.style.display = 'inline-block';
     }
+
+    yesBtn.addEventListener('click', function () {
+        fadeOut(greeting5, 0);
+        fadeOut(yesBtn, 0);
+        fadeOut(noBtn, 0);
+
+        socials.classList.remove('hidden');
+        socials.style.display = 'block';
+        fadeIn(socials, 1000);
+    });
+
+    noBtn.addEventListener('click', function () {
+        yesBtn.style.display = 'none';
+        noBtn.style.display = 'none';
+        fadeOut(socials, 1000);
+    });
+
+    // Function to move noBtn randomly on hover
+    noBtn.addEventListener('mouseover', function () {
+        const randomX = Math.floor(Math.random() * (window.innerWidth - noBtn.offsetWidth));
+        const randomY = Math.floor(Math.random() * (window.innerHeight - noBtn.offsetHeight));
+
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = `${randomX}px`;
+        noBtn.style.top = `${randomY}px`;
+    });
 });
